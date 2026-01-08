@@ -1,15 +1,11 @@
 package com.example.demo.application;
 
 import com.example.demo.domain.Task;
-import com.example.demo.domain.TaskId;
 
 public class CompleteTaskUseCase {
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
-    public CompleteTaskUseCase() {
-    }
-
-    public void setTaskRepository(TaskRepository taskRepository) {
+    public CompleteTaskUseCase(final TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 

@@ -1,26 +1,39 @@
-package com.example.demo;
+package com.example;
 
-import com.example.demo.application.AddTaskUseCase;
-import com.example.demo.application.CompleteTaskUseCase;
-import com.example.demo.application.GetTaskUseCase;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.common.PageSpec;
+import com.example.common.ResultPage;
+import com.example.demo.application.*;
+import com.example.demo.domain.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 @SpringBootApplication
 public class TaskManagerApplication implements ApplicationRunner {
+    private static final Logger LOG = LoggerFactory.getLogger(TaskManagerApplication.class);
 
     private final AddTaskUseCase addTaskUseCase;
     private final GetTaskUseCase getTaskUseCase;
     private final CompleteTaskUseCase completeTaskUseCase;
+    private final GetAllTasksUseCase getAllTasksUseCase;
+    private final DeleteTaskUseCase deleteTaskUseCase;
 
     public TaskManagerApplication(AddTaskUseCase addTaskUseCase,
                                   GetTaskUseCase getTaskUseCase,
-                                  CompleteTaskUseCase completeTaskUseCase) {
+                                  CompleteTaskUseCase completeTaskUseCase,
+                                  GetAllTasksUseCase getAllTasksUseCase,
+                                  DeleteTaskUseCase deleteTaskUseCase) {
         this.addTaskUseCase = addTaskUseCase;
         this.getTaskUseCase = getTaskUseCase;
         this.completeTaskUseCase = completeTaskUseCase;
+        this.getAllTasksUseCase = getAllTasksUseCase;
+        this.deleteTaskUseCase = deleteTaskUseCase;
     }
 
     public static void main(String[] args) {
@@ -29,19 +42,32 @@ public class TaskManagerApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        var taskA = addTaskUseCase.handle("Task A", "This is the first task description.", false);
-        var taskB = addTaskUseCase.handle("Task B", "This is the second task description.", false);
+
+        Task taskA = null;
+        for (int i = 0; i < 10; i++) {
+            var t = addTaskUseCase.handle("Task " + String.valueOf(i), "Task description.", false);
+            if (i == 5) {
+                taskA = t;
+            }
+        }
+
+        ResultPage<Task> page = getAllTasksUseCase.handle(new PageSpec(5, 10));
+        page.content().forEach(task -> LOG.info("getAllTasksUseCase: {}", task.toString()));
 
         var taskF = getTaskUseCase.handle(taskA.getId());
+        LOG.info("getTaskUseCase: {}", taskF.toString()); // taskF found
+
         completeTaskUseCase.handle(taskF);
-
-        // verify the task was completed
-        // listAllTasksUseCase.handle();
-
-        // deleteTaskUseCase.handle(taskF.getId());
-
-        // the task was deleted - but just check
-        // getTaskUseCase.handle(taskA.getId());
-        // listAllTasksUseCase.handle();
+        LOG.info("completeTaskUseCase: {}", taskF.toString()); // taskF completed
+        if (deleteTaskUseCase.handle(taskF.getId()) ) {
+            LOG.info("deleteTaskUseCase: success Task deleted - {}", taskF.toString());
+        } else {
+            LOG.info("deleteTaskUseCase: no Task to delete - {}", taskF.toString());
+        }
+        try {
+            getTaskUseCase.handle(taskF.getId()); // task was deleted
+        } catch (TaskNotFoundExeption e) {
+            LOG.info("Task id: {} was deleted", taskF.getId());
+        }
     }
 }

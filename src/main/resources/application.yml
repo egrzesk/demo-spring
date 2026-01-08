@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: task-manager
+#  profiles:
+#    active: dev
+logging:
+  level:
+    org.springframework: info
+card-number-length: 16

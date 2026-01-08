@@ -1,5 +1,7 @@
 package com.example.demo.application;
 
+import com.example.common.PageSpec;
+import com.example.common.ResultPage;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskId;
 
@@ -10,7 +12,9 @@ public interface TaskRepository {
 
     Optional<Task> findById(TaskId id);
 
-    Optional<Task> findAll();
+    ResultPage<Task> findAll(final PageSpec pageSpec);
 
     Optional<Task> completeTask(TaskId taskId);
+
+    boolean deleteTask(TaskId taskId);
 }

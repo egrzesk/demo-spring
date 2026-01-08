@@ -51,5 +51,14 @@ public final class Task {
         this.completed = completed;
     }
 
-
+    @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", completed=" + completed +
+                ", createdAt=" + createdAt +
+                ", id=" + id +
+                '}';
+    }
 }
