@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.application.AddTaskUseCase;
-import com.example.demo.application.DateTimeProvider;
-import com.example.demo.application.TaskRepository;
+import com.example.demo.application.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,5 +13,17 @@ public class TaskManagerConfiguration {
         addTaskUseCase.setTaskRepository(taskRepository);
         return addTaskUseCase;
     }
-    
+
+    @Bean
+    public GetTaskUseCase getTaskUseCase(TaskRepository taskRepository) {
+        return new GetTaskUseCase(taskRepository);
+    }
+
+    @Bean
+    public CompleteTaskUseCase completeTaskUseCase(TaskRepository taskRepository) {
+        var completeTaskUseCase = new CompleteTaskUseCase();
+        completeTaskUseCase.setTaskRepository(taskRepository);
+        return completeTaskUseCase;
+    }
+
 }

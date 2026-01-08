@@ -13,18 +13,43 @@ import java.time.ZonedDateTime;
     Long id, String title, String description, boolean completed, LocalDate createdAt
 */
 public final class Task {
-    private final Long id;
-    private final String title;
-    private final String description;
-    private final boolean completed;
+    private final TaskId id;
+    private String title;
+    private String description;
+    private boolean completed;
     private final LocalDate createdAt;
 
-    public Task(Long id, String title, String description, boolean completed, ZonedDateTime timestamp) {
+    public Task(TaskId id, String title, String description, boolean completed, ZonedDateTime timestamp) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.completed = completed;
         this.createdAt = timestamp.toLocalDate();
     }
+
+    public TaskId getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.application;
 
 import com.example.demo.domain.Task;
+import com.example.demo.domain.TaskId;
 
 public class AddTaskUseCase {
 
@@ -15,12 +16,12 @@ public class AddTaskUseCase {
         this.taskRepository = taskRepository;
     }
 
-    public void handle(String title, String description, boolean completed) {
+    public Task handle(String title, String description, boolean completed) {
         var task = createTask(title, description, completed);
-        taskRepository.save(task);
+        return taskRepository.save(task);
     }
 
     private Task createTask(String title, String description, boolean completed) {
-        return new Task(1L, title, description, completed, dateTimeProvider.getZonedDateTime());
+        return new Task(new TaskId(), title, description, completed, dateTimeProvider.getZonedDateTime());
     }
 }
