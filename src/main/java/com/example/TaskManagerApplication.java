@@ -1,5 +1,9 @@
 package com.example;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+
+/*
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -35,11 +39,15 @@ public class TaskManagerApplication implements ApplicationRunner {
         this.getAllTasksUseCase = getAllTasksUseCase;
         this.deleteTaskUseCase = deleteTaskUseCase;
     }
+*/
+@Configuration
+@SpringBootApplication
+public class TaskManagerApplication {
 
     public static void main(String[] args) {
-		SpringApplication.run(TaskManagerApplication.class, args);
 	}
 
+/*
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -70,4 +78,5 @@ public class TaskManagerApplication implements ApplicationRunner {
             LOG.info("Task id: {} was deleted", taskF.getId());
         }
     }
+*/
 }

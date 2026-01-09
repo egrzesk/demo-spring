@@ -1,0 +1,46 @@
+package com.example.demo.adapters.rest;
+
+import com.example.common.web.LocationUri;
+import com.example.demo.application.AddTaskUseCase;
+import com.example.demo.domain.Task;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.util.Currency;
+
+@RestController
+final class AddTaskRestController {
+    private final AddTaskUseCase addTaskUseCase;
+
+    public AddTaskRestController(AddTaskUseCase addTaskUseCase) {
+        this.addTaskUseCase = addTaskUseCase;
+    }
+
+    @PostMapping("api/tasks")
+    ResponseEntity<AddTaskResponse> addTask(@Valid @RequestBody AddTaskRequest addTaskRequest) {
+        var task = addTaskUseCase.handle(addTaskRequest.title(), addTaskRequest.description(), addTaskRequest.completed());
+        var id = LocationUri.fromRequest(task.getId().toString());
+        return ResponseEntity.created(id)
+                .body(AddTaskResponse.from(task));
+    }
+}
+
+record AddTaskRequest(
+        @NotBlank(message = "title is required") String title,
+        String description,     // may be filled in later
+        boolean completed) {
+}
+
+record AddTaskResponse(String title, String description, boolean completed) {
+
+    static AddTaskResponse from(final Task task) {
+        return new AddTaskResponse(task.getTitle(), task.getDescription(), task.isCompleted());
+    }
+
+}
