@@ -5,14 +5,10 @@ import com.example.demo.application.AddTaskUseCase;
 import com.example.demo.domain.Task;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
-import java.util.Currency;
 
 @RestController
 final class AddTaskRestController {

@@ -13,7 +13,7 @@ logging:
       ddl-auto: create-drop
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:5433/payments
+    url: jdbc:postgresql://localhost:5432/tasks
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -28,6 +28,4 @@ logging:
 #    # port: 27017
   messages:
     basename: exceptions
-logging:
-  level:
-    org.springframework: info
+
