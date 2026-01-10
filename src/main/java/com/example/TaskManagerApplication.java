@@ -1,7 +1,7 @@
 package com.example;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
 
 /*
 import org.springframework.boot.ApplicationArguments;
@@ -40,11 +40,11 @@ public class TaskManagerApplication implements ApplicationRunner {
         this.deleteTaskUseCase = deleteTaskUseCase;
     }
 */
-@Configuration
+
 @SpringBootApplication
 public class TaskManagerApplication {
-
     public static void main(String[] args) {
+        SpringApplication.run(TaskManagerApplication.class, args);
 	}
 
 /*

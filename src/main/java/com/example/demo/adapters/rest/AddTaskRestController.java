@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 final class AddTaskRestController {
@@ -21,9 +24,14 @@ final class AddTaskRestController {
     @PostMapping("api/tasks")
     ResponseEntity<AddTaskResponse> addTask(@Valid @RequestBody AddTaskRequest addTaskRequest) {
         var task = addTaskUseCase.handle(addTaskRequest.title(), addTaskRequest.description(), addTaskRequest.completed());
-        var id = LocationUri.fromRequest(task.getId().toString());
-        return ResponseEntity.created(id)
-                .body(AddTaskResponse.from(task));
+        var id = task.getId().value();
+        //var id = LocationUri.fromRequest(s);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()      // /api/tasks
+                .path("/{id}")
+                .buildAndExpand(id)        // .build()
+                .toUri();
+        return ResponseEntity.created(location).body(AddTaskResponse.from(task));
     }
 }
 
@@ -33,10 +41,10 @@ record AddTaskRequest(
         boolean completed) {
 }
 
-record AddTaskResponse(String title, String description, boolean completed) {
+record AddTaskResponse(com.example.demo.domain.TaskId id, String title, String description, boolean completed) {
 
     static AddTaskResponse from(final Task task) {
-        return new AddTaskResponse(task.getTitle(), task.getDescription(), task.isCompleted());
+        return new AddTaskResponse(task.getId(), task.getTitle(), task.getDescription(), task.isCompleted());
     }
 
 }

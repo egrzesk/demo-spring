@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/tasks
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Title R1",
+  "description": "Description R1",
+  "completed": false
+}
+
+> {%
+    client.global.set('id', response.body.id);
+%}
+
+###
+GET http://localhost:8080/api/tasks/{{id}}}
+Accept: application/json
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/tasks/a2ddcfb4-8efa-40f5-b090-665224a841e7
+Accept: application/json
+Content-Type: application/json
