@@ -14,7 +14,7 @@ public interface TaskRepository {
 
     ResultPage<Task> findAll(final PageSpec pageSpec);
 
-    Optional<Task> completeTask(TaskId taskId);
+    Task update(Task task);
 
     boolean deleteTask(TaskId taskId);
 }

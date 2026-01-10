@@ -28,23 +28,23 @@ public class HashMapTaskRepository implements TaskRepository {
     @Override
     public synchronized ResultPage<Task> findAll(final PageSpec pageSpec) {
         var tasks = new ArrayList<>(data.values());
-        tasks.sort(Comparator.comparing(Task::getTitle).reversed());
-        int startIndex = pageSpec.index(); // * pageSpec.size();
-        int endIndex = Math.min(startIndex + tasks.size(), tasks.size());
+        tasks.sort(Comparator.comparing(Task::getTitle)); //.reversed()
+        int startIndex = pageSpec.index() * pageSpec.size();
+        int endIndex = Math.min(startIndex + pageSpec.size(), tasks.size());
         var content = tasks.subList(startIndex, endIndex);
         int totalPages = (int) Math.ceil((double) tasks.size() / pageSpec.size());
         return new ResultPage<>(content, pageSpec, totalPages);
     }
 
     @Override
-    public synchronized Optional<Task> completeTask(TaskId taskId) {
-        var task = data.get(taskId);
-        task.setCompleted(true);
-        return Optional.empty();
+    public synchronized Task update(Task task) {
+        data.replace(task.getId(), task);
+        return task;
     }
 
     @Override
     public synchronized boolean deleteTask(TaskId taskId) {
         return data.remove(taskId) != null;
     }
+
 }

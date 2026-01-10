@@ -1,3 +1,4 @@
+### POST pojedynczy
 POST http://localhost:8080/api/tasks
 Accept: application/json
 Content-Type: application/json
@@ -12,12 +13,54 @@ Content-Type: application/json
     client.global.set('id', response.body.id);
 %}
 
-###
-GET http://localhost:8080/api/tasks/{{id}}}
+### GET znajduje po id ostatnio dodanego
+GET http://localhost:8080/api/tasks/{{id}}
 Accept: application/json
 Content-Type: application/json
 
-###
-GET http://localhost:8080/api/tasks/a2ddcfb4-8efa-40f5-b090-665224a841e7
+> {%
+    client.global.set('id', response.body.id);
+%}
+
+### PATCH ustawia completed dla ostatnio dodanego
+PATCH http://localhost:8080/api/tasks/{{id}}
+Content-Type: application/json
+Accept: application/json
+
+{ "completed": true }
+
+### GET podanego id
+GET http://localhost:8080/api/tasks/d31e7306-2566-4f57-98bc-1ae2f206695c
 Accept: application/json
 Content-Type: application/json
+
+### PATCH dla podanego id
+PATCH http://localhost:8080/api/tasks/989d5ff1-8c54-4501-ade6-2438bc523213
+Content-Type: application/json
+Accept: application/json
+
+{ "completed": true }
+
+
+### POST 10 razy z i=1..10
+< {%
+    // Ustawiamy zmienną requestu "i" na tablicę wartości [1..10].
+    request.variables.set("i", Array.from({ length: 20 }, (_, k) => k + 100));
+%}
+POST http://localhost:8080/api/tasks
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Title-{{i}}",
+  "description": "Batch insert no.: {{i}}",
+  "completed": false
+}
+
+### GET od strony 0 rozmiar strony 5
+GET http://localhost:8080/api/tasks?pageNumber=0&pageSize=5
+Accept: application/json
+Content-Type: application/json
+
+
+

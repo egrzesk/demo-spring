@@ -41,10 +41,10 @@ record AddTaskRequest(
         boolean completed) {
 }
 
-record AddTaskResponse(com.example.demo.domain.TaskId id, String title, String description, boolean completed) {
+record AddTaskResponse(String id, String title, String description, boolean completed) {
 
     static AddTaskResponse from(final Task task) {
-        return new AddTaskResponse(task.getId(), task.getTitle(), task.getDescription(), task.isCompleted());
+        return new AddTaskResponse(String.valueOf(task.getId()), task.getTitle(), task.getDescription(), task.isCompleted());
     }
 
 }
