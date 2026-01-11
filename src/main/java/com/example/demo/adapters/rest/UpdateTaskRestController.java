@@ -15,6 +15,7 @@ import java.util.UUID;
 final class UpdateTaskRestController {
     private final UpdateTaskUseCase updateTaskUseCase;
     //private final Validator validator;
+
     public UpdateTaskRestController(UpdateTaskUseCase updateTaskUseCase) {  //Validator validator
         this.updateTaskUseCase = updateTaskUseCase;
     }

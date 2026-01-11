@@ -10,7 +10,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/tasks")
 final class DeleteTaskController {
-    private DeleteTaskUseCase deleteTaskUseCase;
+    private final DeleteTaskUseCase deleteTaskUseCase;
 
     public DeleteTaskController(DeleteTaskUseCase deleteTaskUseCase) {
         this.deleteTaskUseCase = deleteTaskUseCase;

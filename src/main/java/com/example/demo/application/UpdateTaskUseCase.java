@@ -4,11 +4,8 @@ import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskId;
 import com.example.demo.domain.TaskPatchRequest;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
 public class UpdateTaskUseCase {
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public UpdateTaskUseCase(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
