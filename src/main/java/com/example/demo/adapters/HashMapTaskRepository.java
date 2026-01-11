@@ -37,12 +37,6 @@ public class HashMapTaskRepository implements TaskRepository {
     }
 
     @Override
-    public synchronized Task update(Task task) {
-        data.replace(task.getId(), task);
-        return task;
-    }
-
-    @Override
     public synchronized boolean deleteTask(TaskId taskId) {
         return data.remove(taskId) != null;
     }

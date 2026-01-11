@@ -14,6 +14,6 @@ public class CompleteTaskUseCase {
         // taskRepository.completeTask(task.getId());
         var task = taskRepository.findById(taskId).orElseThrow();
         task.setCompleted(completed);
-        return taskRepository.update(task);
+        return taskRepository.save(task);
     }
 }

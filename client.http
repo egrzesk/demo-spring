@@ -1,4 +1,4 @@
-### POST pojedynczy
+### POST - Adding new task
 POST http://localhost:8080/api/tasks
 Accept: application/json
 Content-Type: application/json
@@ -13,7 +13,7 @@ Content-Type: application/json
     client.global.set('id', response.body.id);
 %}
 
-### GET znajduje po id ostatnio dodanego
+### GET - Retrieval of the task by the ID of the most recently added one
 GET http://localhost:8080/api/tasks/{{id}}
 Accept: application/json
 Content-Type: application/json
@@ -22,30 +22,28 @@ Content-Type: application/json
     client.global.set('id', response.body.id);
 %}
 
-### PATCH ustawia completed dla ostatnio dodanego
-PATCH http://localhost:8080/api/tasks/{{id}}
+### PATCH - Completion of the most recently added task
+PATCH http://localhost:8080/api/tasks/{{id}}/complete
 Content-Type: application/json
 Accept: application/json
 
 { "completed": true }
 
-### GET podanego id
+### GET - Retrival of a task by the given ID
 GET http://localhost:8080/api/tasks/d31e7306-2566-4f57-98bc-1ae2f206695c
 Accept: application/json
 Content-Type: application/json
 
-### PATCH dla podanego id
-PATCH http://localhost:8080/api/tasks/989d5ff1-8c54-4501-ade6-2438bc523213
+### PATCH - Completion of a task for the given ID
+PATCH http://localhost:8080/api/tasks/a9aae745-c7a2-4e15-b47f-4b2cf0b90116/complete
 Content-Type: application/json
 Accept: application/json
 
 { "completed": true }
 
-
-### POST 10 razy z i=1..10
+### POST - Adding a new task multiple times; i=100..100+n
 < {%
-    // Ustawiamy zmienną requestu "i" na tablicę wartości [1..10].
-    request.variables.set("i", Array.from({ length: 20 }, (_, k) => k + 100));
+    request.variables.set("i", Array.from({ length: 10 }, (_, k) => k + 100));
 %}
 POST http://localhost:8080/api/tasks
 Accept: application/json
@@ -57,10 +55,26 @@ Content-Type: application/json
   "completed": false
 }
 
-### GET od strony 0 rozmiar strony 5
+### GET - Retrieval of a single page of data; RequestParams: pageNumber=0 pageSize=5
 GET http://localhost:8080/api/tasks?pageNumber=0&pageSize=5
 Accept: application/json
 Content-Type: application/json
 
+### DELETE - Removal of a task by ID -> 204 No Content
+DELETE http://localhost:8080/api/tasks/73b67aeb-89d6-46e2-ba24-98f768e28593
+Accept: application/json
 
+### DELETE - Removal of non-existent task -> 404 Not Found
+DELETE http://localhost:8080/api/tasks/00000000-0000-0000-0000-000000000000
+Accept: application/json
 
+### PATCH - Patch of a task by ID
+PATCH  http://localhost:8080/api/tasks/a9aae745-c7a2-4e15-b47f-4b2cf0b90116
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Title-001",
+  "description": "New description from patch.",
+  "completed": false
+}

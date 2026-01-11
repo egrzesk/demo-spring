@@ -10,10 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TaskManagerConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(TaskManagerConfiguration.class);
+    //private static final Logger log = LoggerFactory.getLogger(TaskManagerConfiguration.class);
 
     @Bean
     public AddTaskUseCase addTaskUseCase(DateTimeProvider dateTimeProvider, TaskRepository taskRepository) {
+        //log.info("@Bean addTaskUseCase ------------------------------------------------------------------------------");
         var addTaskUseCase = new AddTaskUseCase(dateTimeProvider);
         addTaskUseCase.setTaskRepository(taskRepository);
         return addTaskUseCase;
@@ -21,7 +22,7 @@ public class TaskManagerConfiguration {
 
     @Bean
     public GetTaskUseCase getTaskUseCase(TaskRepository taskRepository) {
-        log.info("getTaskUseCase -----------------------------");
+        //log.info("@Bean getTaskUseCase ------------------------------------------------------------------------------");
         return new GetTaskUseCase(taskRepository);
     }
 
@@ -37,6 +38,13 @@ public class TaskManagerConfiguration {
 
     @Bean
     public DeleteTaskUseCase deleteTaskUseCase(TaskRepository taskRepository) {
-       return new DeleteTaskUseCase(taskRepository);
+        //log.info("@Bean deleteTaskUseCase ---------------------------------------------------------------------------");
+        return new DeleteTaskUseCase(taskRepository);
     }
+
+    @Bean
+    public UpdateTaskUseCase updateTaskUseCase(TaskRepository taskRepository) {
+        return new UpdateTaskUseCase(taskRepository);
+    }
+
 }

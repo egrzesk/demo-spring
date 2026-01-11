@@ -3,15 +3,6 @@ package com.example.demo.domain;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
-/*---------------------------------------------
-    `id` – unikalny identyfikator (`Long`)
-    `title` – tytuł zadania
-    `description` – opis
-    `completed` – status wykonania (`boolean`)
-    `createdAt` – data utworzenia
-
-    Long id, String title, String description, boolean completed, LocalDate createdAt
-*/
 public final class Task {
     private final TaskId id;
     private String title;
@@ -47,8 +38,26 @@ public final class Task {
         return createdAt;
     }
 
+    public String setTitle(String title) {
+        String old = this.title;
+        this.title = title;
+        return old;
+    }
+
+    public String setDescription(String description) {
+        String old = this.description;
+        this.description = description;
+        return old;
+    }
+
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public void applyPatch(String newTitle, String newDescription, Boolean newCompleted) {
+        if (newTitle != null) setTitle(newTitle);
+        if (newDescription != null) setDescription(newDescription);
+        if (newCompleted != null) setCompleted(newCompleted);
     }
 
     @Override

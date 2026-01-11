@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @RestController
 //@RequestMapping("api/tasks")
-public class GetTasksRestController {
+final class GetTasksRestController {
     private GetAllTasksUseCase getAllTasksUseCase;
 
     public GetTasksRestController(GetAllTasksUseCase getAllTasksUseCase) {
