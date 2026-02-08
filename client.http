@@ -65,11 +65,11 @@ DELETE http://localhost:8080/api/tasks/73b67aeb-89d6-46e2-ba24-98f768e28593
 Accept: application/json
 
 ### DELETE - Removal of non-existent task -> 404 Not Found
-DELETE http://localhost:8080/api/tasks/00000000-0000-0000-0000-000000000000
+DELETE http://localhost:8080/api/tasks/ded71c4e-66e8-49db-adbf-c6b4eb120355
 Accept: application/json
 
 ### PATCH - Patch of a task by ID
-PATCH  http://localhost:8080/api/tasks/a9aae745-c7a2-4e15-b47f-4b2cf0b90116
+PATCH  http://localhost:8080/api/tasks/a1ae75e7-ab89-4df5-bf05-4857533f9b1e
 Accept: application/json
 Content-Type: application/json
 
